@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   acno=""
   pswd=""
 
-  dataBase={1001:{acno:1001,uname:"sahal",password:1001,balance:100000},
+  dataBase:any={1001:{acno:1001,uname:"sahal",password:1001,balance:100000},
             1002:{acno:1001,uname:"sahal",password:1001,balance:100000},
             1003:{acno:1001,uname:"sahal",password:1001,balance:100000}}
 
@@ -30,7 +30,18 @@ export class LoginComponent implements OnInit {
   }
 
  login(){
-   alert("account number"+this.acno+"\npassword"+this.pswd)
+   var acno=this.acno
+   var pswd=this.pswd
+   var dataBase=this.dataBase
+   if(acno in dataBase){
+     if(pswd == dataBase[acno]["password"]){
+       alert("login successfull")
+     }else{
+       alert("invalid password")
+     }
+   }else{
+     alert("user doues not exist")
+   }
    
  }
 }
