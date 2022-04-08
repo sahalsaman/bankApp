@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -8,16 +9,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  aim="your perfect bak partner"
+  aim="your perfect bank partner"
   accn="Enter account number"
   acno=""
   pswd=""
 
-  dataBase:any={1001:{acno:1001,uname:"sahal",password:1001,balance:100000},
-            1002:{acno:1001,uname:"sahal",password:1001,balance:100000},
-            1003:{acno:1001,uname:"sahal",password:1001,balance:100000}}
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private ds:DataService) { }
 
   ngOnInit(): void {
   }
@@ -38,18 +36,15 @@ export class LoginComponent implements OnInit {
  login(){
    var acno=this.acno
    var pswd=this.pswd
-   var dataBase=this.dataBase
-   if(acno in dataBase){
-     if(pswd == dataBase[acno]["password"]){
-       alert("login successfull")
-       this.router.navigateByUrl("home")
-     }else{
-       alert("invalid password")
-     }
-   }else{
-     alert("user does not exist")
+
+   const result = this.ds.login(acno,pswd)
+
+   if (result) {
+     this.router.navigateByUrl("home")
    }
- }
+   
+   }
+ 
 
 //   Template Refernce variable
 // =====================
