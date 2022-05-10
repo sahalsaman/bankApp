@@ -10,7 +10,8 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 import { HighlightDirective } from './directives/highlight.directive';
 import { AnimationDemoComponent } from './animation-demo/animation-demo.component';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

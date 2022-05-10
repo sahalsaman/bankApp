@@ -35,15 +35,15 @@ export class DashBoardComponent implements OnInit {
   delAcno:any
 
   constructor(private ds:DataService,private fb:FormBuilder,private router:Router) {
-    this.user=this.ds.currentUser
+    this.user=JSON.parse(localStorage.getItem('currentUser')||"")
     this.loginDate=new Date()
    }
 
   ngOnInit(): void {
-    if(!localStorage.getItem("currentAcno")){
-      alert("please login")
-      this.router.navigateByUrl("/")
-    }
+    // if(!localStorage.getItem("currentAcno")){
+    //   alert("please login")
+    //   this.router.navigateByUrl("/")
+    // }
   }
 
   deposit(){
@@ -51,11 +51,15 @@ export class DashBoardComponent implements OnInit {
     let pswd=this.depositForm.value.pswd
     let amount=this.depositForm.value.amount
    if(this.depositForm.valid){
-    const result=this.ds.deposit(acno,pswd,amount)
-    if(result){
-      alert(amount+" successfully deposited \n current balance "+result)
-      console.log(this.ds.dataBase);
-    }
+    this.ds.deposit(acno,pswd,amount).subscribe((result:any)=>{
+      if(result){
+        alert(result.messege)
+        // console.log(this.ds.dataBase);
+      }
+    },result=>{
+      alert(result.error.messege)
+    })
+    
     }else{
       alert("invalid form")
     }
@@ -65,11 +69,13 @@ export class DashBoardComponent implements OnInit {
     let pswd=this.withdrawForm.value.pswd2
     let amount=this.withdrawForm.value.amount2
 if(this.withdrawForm.valid){
-    const result=this.ds.withdraw(acno,pswd,amount)
+  this.ds.withdraw(acno,pswd,amount).subscribe((result:any)=>{
     if(result){
-      alert(amount+" successfully withdrawed \n current balance "+result)
-      console.log(this.ds.dataBase);
+      alert(result.messege)
     }
+  },result=>{
+    alert(result.error.messege)
+  })
     }else{
       alert("invalid form")
     }
@@ -78,7 +84,7 @@ if(this.withdrawForm.valid){
   logout(){
     localStorage.removeItem("currentAcno")
     localStorage.removeItem("currentUser")
-    this.router.navigateByUrl("/")
+    this.router.navigateByUrl("")
   }
 
   deletefromParent(){
@@ -90,6 +96,13 @@ if(this.withdrawForm.valid){
  }
 
  onDelete(event:any){
-   alert("delete"+event)
+  this.ds.onDelete(event).subscribe((result:any)=>{
+    if(result){
+      alert(result.messege)
+      this.router.navigateByUrl("")
+    }
+  },result=>{
+    alert(result.error.messege)
+  })
  }
 }
