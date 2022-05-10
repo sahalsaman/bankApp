@@ -13,18 +13,14 @@ export class DataService {
   currentUser: any
   currentacno: any
 
-  dataBase: any = {
-    1001: { acno: 1001, uname: "sahal", password: 1001, balance: 10000, transaction: [] },
-    1002: { acno: 1002, uname: "mubi", password: 1002, balance: 5000, transaction: [] },
-    1003: { acno: 1003, uname: "siyad", password: 1003, balance: 7000, transaction: [] }
-  }
+  
 
   constructor(private http: HttpClient) {
     this.getDetails()
   }
 
   saveDetails() {
-    localStorage.setItem("database", JSON.stringify(this.dataBase))
+    // localStorage.setItem("database", JSON.stringify(this.dataBase))
     if (this.currentacno) {
       localStorage.setItem("currentAcno", JSON.stringify(this.currentacno))
     }
@@ -34,9 +30,9 @@ export class DataService {
   }
 
   getDetails() {
-    if (localStorage.getItem("database")) {
-      this.dataBase = JSON.parse(localStorage.getItem("database") || "")
-    }
+    // if (localStorage.getItem("database")) {
+    //   this.dataBase = JSON.parse(localStorage.getItem("database") || "")
+    // }
     if (localStorage.getItem("currentAcno")) {
       this.currentacno = JSON.parse(localStorage.getItem("currentAcno") || "")
     }
